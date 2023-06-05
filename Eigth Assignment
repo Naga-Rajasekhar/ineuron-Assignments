@@ -1,0 +1,201 @@
+Naga Rajasekhar
+Strings - 8th Assignment
+
+1st Solution
+function minimumDeleteSum(s1, s2) {
+  const m = s1.length;
+  const n = s2.length;
+
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+
+  for (let i = 1; i <= m; i++) {
+    dp[i][0] = dp[i - 1][0] + s1.charCodeAt(i - 1);
+  }
+
+  for (let j = 1; j <= n; j++) {
+    dp[0][j] = dp[0][j - 1] + s2.charCodeAt(j - 1);
+  }
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s1.charAt(i - 1) === s2.charAt(j - 1)) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + s1.charCodeAt(i - 1),
+          dp[i][j - 1] + s2.charCodeAt(j - 1)
+        );
+      }
+    }
+  }
+
+  return dp[m][n];
+}
+
+console.log(minimumDeleteSum("sea", "eat")); 
+
+
+
+2nd Solution
+function checkValidString(s) {
+  let balance = 0;
+  let wildcard = 0;
+
+  for (const char of s) {
+    if (char === '(') {
+      balance++;
+    } else if (char === ')') {
+      if (balance > 0) {
+        balance--;
+      } else if (wildcard > 0) {
+        wildcard--;
+      } else {
+        return false;
+      }
+    } else if (char === '*') {
+      wildcard++;
+    }
+  }
+
+  while (balance > 0 && wildcard > 0) {
+    balance--;
+    wildcard--;
+  }
+
+  return balance === 0;
+}
+
+console.log(checkValidString("()")); 
+
+
+
+3rd Solution
+function minDistance(word1, word2) {
+  const m = word1.length;
+  const n = word2.length;
+
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (word1.charAt(i - 1) === word2.charAt(j - 1)) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+
+  return m + n - 2 * dp[m][n];
+}
+
+console.log(minDistance("sea", "eat"));  
+
+
+5th Solution
+function compress(chars) {
+  let writePtr = 0; 
+  let count = 1;
+
+  for (let readPtr = 0; readPtr < chars.length; readPtr++) {
+    if (readPtr === chars.length - 1 || chars[readPtr] !== chars[readPtr + 1]) {
+      
+      chars[writePtr] = chars[readPtr]; 
+
+      if (count > 1) {
+        const countStr = count.toString(); 
+        for (let i = 0; i < countStr.length; i++) {
+          chars[++writePtr] = countStr[i];
+        }
+      }
+
+      writePtr++; 
+      count = 1; 
+    } else {
+      count++; 
+    }
+  }
+
+  return writePtr; 
+}
+
+const chars = ["a", "a", "b", "b", "c", "c", "c"];
+const newLength = compress(chars);
+console.log(newLength);
+console.log(chars.slice(0, newLength));
+
+
+
+7th Solution
+function decodeString(s) {
+  const stack = []; 
+  let decoded = '';
+  let k = 0; 
+
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+
+    if (char >= '0' && char <= '9') {
+    
+      k = k * 10 + Number(char);
+    } else if (char === '[') {
+    
+      stack.push(decoded);
+      stack.push(k);
+      
+      decoded = '';
+      k = 0;
+    } else if (char === ']') {
+    
+      const prevK = stack.pop();
+      const prevDecoded = stack.pop();
+      
+      decoded = prevDecoded + decoded.repeat(prevK);
+    } else {
+      decoded += char;
+    }
+  }
+
+  return decoded;
+}
+const s = "3[a]2[bc]";
+const decodedString = decodeString(s);
+console.log(decodedString);
+
+
+
+8th Solution
+function buddyStrings(s, goal) {
+  if (s.length !== goal.length) {
+    return false;
+  }
+
+  if (s === goal) {
+    const frequency = new Map();
+    for (const char of s) {
+      if (frequency.has(char)) {
+        return true;
+      }
+      frequency.set(char, 1);
+    }
+    return false;
+  }
+
+  const diff = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== goal[i]) {
+      diff.push(i);
+    }
+  }
+
+  if (diff.length !== 2) {
+    return false;
+  }
+
+  return s[diff[0]] === goal[diff[1]] && s[diff[1]] === goal[diff[0]];
+}
+
+console.log(buddyStrings("ab", "ba")); 
+
+
+
