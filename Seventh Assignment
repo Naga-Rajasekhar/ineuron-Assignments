@@ -1,0 +1,199 @@
+Naga Rajasekhar
+Strings - 3rd Assignment
+
+-------------------1st Solution---------------------------------
+function isIsomorphic(s, t) {
+  if (s.length !== t.length) {
+    return false;
+  }
+
+  const charMapS = new Map();
+  const charMapT = new Map();
+
+  for (let i = 0; i < s.length; i++) {
+    const charS = s[i];
+    const charT = t[i];
+
+    if (
+      (charMapS.has(charS) && charMapS.get(charS) !== charT) ||
+      (charMapT.has(charT) && charMapT.get(charT) !== charS)
+    ) {
+      return false;
+    }
+
+    charMapS.set(charS, charT);
+    charMapT.set(charT, charS);
+  }
+
+  return true;
+}
+
+console.log(isIsomorphic("egg", "add")); 
+
+
+
+------------------------------------2nd Solution--------------------------------
+function isStrobogrammatic(num) {
+  const pairs = {
+    '0': '0',
+    '1': '1',
+    '6': '9',
+    '8': '8',
+    '9': '6',
+  };
+
+  let left = 0;
+  let right = num.length - 1;
+
+  while (left <= right) {
+    if (!pairs[num[left]] || pairs[num[left]] !== num[right]) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+
+  return true;
+}
+
+console.log(isStrobogrammatic("69")); 
+
+
+
+-----------------------------------3rd Solution---------------------------------
+function addStrings(num1, num2) {
+  let i = num1.length - 1;
+  let j = num2.length - 1;
+  let carry = 0;
+  let result = "";
+
+  while (i >= 0 || j >= 0 || carry > 0) {
+    const digit1 = i >= 0 ? parseInt(num1[i]) : 0;
+    const digit2 = j >= 0 ? parseInt(num2[j]) : 0;
+    const sum = digit1 + digit2 + carry;
+
+    result = (sum % 10) + result;
+    carry = Math.floor(sum / 10);
+
+    i--;
+    j--;
+  }
+
+  return result;
+}
+
+console.log(addStrings("11", "123")); 
+
+
+
+---------------------------------4th Solution--------------------------------
+function reverseWords(s) {
+  const words = s.split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = reverseString(words[i]);
+  }
+
+  return words.join(" ");
+}
+
+function reverseString(str) {
+  let reversed = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    reversed += str[i];
+  }
+  return reversed;
+}
+
+console.log(reverseWords("Let's take LeetCode contest"));  
+
+
+
+-------------------------------5th Solution----------------------------------
+function reverseStr(s, k) {
+  const arr = Array.from(s);
+
+  for (let i = 0; i < arr.length; i += 2 * k) {
+    let start = i;
+    let end = Math.min(i + k - 1, arr.length - 1);
+
+    while (start < end) {
+      const temp = arr[start];
+      arr[start] = arr[end];
+      arr[end] = temp;
+      start++;
+      end--;
+    }
+  }
+
+  return arr.join("");
+}
+
+console.log(reverseStr("abcdefg", 2)); 
+
+
+
+-----------------------------6th Solution-------------------------------
+function rotateString(s, goal) {
+  if (s.length !== goal.length) {
+    return false;
+  }
+
+  const concatenated = s + s;
+
+  return concatenated.includes(goal);
+}
+
+console.log(rotateString("abcde", "cdeab")); 
+
+
+
+-----------------------------7th Solution-------------------------------------
+function backspaceCompare(s, t) {
+  const finalS = processString(s);
+  const finalT = processString(t);
+
+  return finalS === finalT;
+}
+
+function processString(str) {
+  const stack = [];
+
+  for (const char of str) {
+    if (char === '#') {
+      stack.pop();
+    } else {
+      stack.push(char);
+    }
+  }
+
+  return stack.join("");
+}
+
+console.log(backspaceCompare("ab#c", "ad#c")); 
+
+
+
+------------------------------------------8th Solution--------------------------------------
+function checkStraightLine(coordinates) {
+  const [x1, y1] = coordinates[0];
+  const [x2, y2] = coordinates[1];
+
+  const initialSlope = (y2 - y1) / (x2 - x1);
+
+  for (let i = 2; i < coordinates.length; i++) {
+    const [xi, yi] = coordinates[i];
+    const slope = (yi - y1) / (xi - x1);
+
+    if (slope !== initialSlope) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+console.log(checkStraightLine([[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]));  
+
+
+
