@@ -1,5 +1,5 @@
 Naga Rajasekhar
-Strings - 3rd Assignment
+Strings - 7th Assignment
 
 -------------------1st Solution---------------------------------
 function isIsomorphic(s, t) {
