@@ -1,0 +1,136 @@
+Naga Rajasekhar
+Recursion - 9th Assignment
+
+1st Solution
+function isPowerOfTwo(n) {
+  if (n <= 0) {
+    return false;
+  }
+  while (n > 1) {
+    if (n % 2 !== 0) {
+      return false;
+    }
+    n = Math.floor(n / 2);
+  }
+  return n === 1;
+}
+console.log(isPowerOfTwo(1)); 
+console.log(isPowerOfTwo(16));
+console.log(isPowerOfTwo(3));   
+
+
+
+2nd Solution
+function sumOfFirstNNumbers(n) {
+  return (n * (n + 1)) / 2;
+}
+console.log(sumOfFirstNNumbers(3)); 
+console.log(sumOfFirstNNumbers(5));  
+
+
+
+3rd Solution
+function factorial(N) {
+  let result = 1;
+  for (let i = 2; i <= N; i++) {
+    result *= i;
+  }
+  return result;
+}
+console.log(factorial(5));  
+console.log(factorial(4));  
+
+
+
+
+
+
+4th Solution
+function power(N, P) {
+  return Math.pow(N, P);
+}
+
+console.log(power(5, 2));  
+console.log(power(2, 5));  
+
+
+
+5th Solution
+function findMax(arr, start, end) {
+  if (start === end) {
+    return arr[start];
+  }
+
+  const mid = Math.floor((start + end) / 2);
+
+  const maxLeft = findMax(arr, start, mid);
+  const maxRight = findMax(arr, mid + 1, end);
+
+  return Math.max(maxLeft, maxRight);
+}
+
+function findMaxElement(arr) {
+
+  return findMax(arr, 0, arr.length - 1);
+}
+
+console.log(findMaxElement([1, 4, 3, -5, -4, 8, 6])); 
+console.log(findMaxElement([1, 4, 45, 6, 10, -8])); 
+
+
+
+6th Solution
+function findNthTerm(a, d, N) {
+  return a + (N - 1) * d;
+}
+console.log(findNthTerm(2, 1, 5));   
+console.log(findNthTerm(5, 2, 10)); 
+
+
+   
+
+
+
+7th Solution
+function swap(str, i, j) {
+  const charArray = str.split("");
+  const temp = charArray[i];
+  charArray[i] = charArray[j];
+  charArray[j] = temp;
+  return charArray.join("");
+}
+
+function permute(str, start, end, result) {
+  if (start === end) {
+    result.push(str);
+  } else {
+    for (let i = start; i <= end; i++) {
+      str = swap(str, start, i);
+      permute(str, start + 1, end, result);
+      str = swap(str, start, i); 
+    }
+  }
+}
+
+function printPermutations(S) {
+  const result = [];
+  permute(S, 0, S.length - 1, result);
+  return result;
+}
+
+console.log(printPermutations("ABC"));  
+console.log(printPermutations("XY")); 
+
+
+8th Solution
+function productOfArray(arr) {
+  let product = 1;
+  for (let i = 0; i < arr.length; i++) {
+    product *= arr[i];
+  }
+  return product;
+}
+console.log(productOfArray([1, 2, 3, 4, 5]));   
+console.log(productOfArray([1, 6, 3]));       
+
+
