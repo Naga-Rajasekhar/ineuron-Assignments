@@ -1,0 +1,154 @@
+Naga Rajasekhar
+Recursion - 10th Assignment
+
+1st Solution
+function isPowerOfThree(n) {
+  if (n <= 0) {
+    return false;
+  }
+  while (n > 1) {
+    if (n % 3 !== 0) {
+      return false;
+    }
+    n = Math.floor(n / 3);
+  }
+  return n === 1;
+}
+console.log(isPowerOfThree(27));   
+console.log(isPowerOfThree(0));   
+console.log(isPowerOfThree(-1));
+
+
+
+2nd Solution
+function lastRemaining(n) {
+  let start = 1;
+  let remaining = n;
+  let step = 1;
+  let fromLeft = true;
+
+  while (remaining > 1) {
+    if (fromLeft || remaining % 2 === 1) {
+      start += step;
+    }
+    remaining = Math.floor(remaining / 2);
+    step *= 2;
+    fromLeft = !fromLeft;
+  }
+
+  return start;
+}
+console.log(lastRemaining(9)); 
+console.log(lastRemaining(1)); 
+
+
+
+
+
+
+4th Solution
+function stringLength(str) {
+  if (str === '') {
+    return 0;
+  }
+  return 1 + stringLength(str.slice(1));
+}
+console.log(stringLength('abcd'));            
+console.log(stringLength('GEEKSFORGEEKS'));   
+
+
+
+5th Solution
+function countSubstrings(s) {
+  let count = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i; j < s.length; j++) {
+      if (s[i] === s[j]) {
+        count++;
+      }
+    }
+  }
+
+  return count;
+}
+console.log(countSubstrings('abcab'));   
+console.log(countSubstrings('aba'));  
+
+
+
+6th Solution
+function towerOfHanoi(n, source, auxiliary, destination) {
+  if (n === 1) {
+    console.log(`Move disk 1 from rod ${source} to rod ${destination}`);
+    return 1;
+  }
+
+  let moves = 0;
+
+  moves += towerOfHanoi(n - 1, source, destination, auxiliary);
+  console.log(`Move disk ${n} from rod ${source} to rod ${destination}`);
+  moves++;
+  moves += towerOfHanoi(n - 1, auxiliary, source, destination);
+
+  return moves;
+}
+const discs = 2;
+const moves = towerOfHanoi(discs, '1', '2', '3');
+console.log(`Total moves: ${moves}`);
+
+
+7th Solution
+function swap(str, i, j) {
+  const charArray = str.split('');
+  const temp = charArray[i];
+  charArray[i] = charArray[j];
+  charArray[j] = temp;
+  return charArray.join('');
+}
+
+function permute(str, start, end, result) {
+  if (start === end) {
+    result.push(str);
+    return;
+  }
+
+  for (let i = start; i <= end; i++) {
+    str = swap(str, start, i);
+    permute(str, start + 1, end, result);
+    str = swap(str, start, i);  // backtrack
+  }
+}
+
+function printPermutations(str) {
+  const result = [];
+  const n = str.length;
+  permute(str, 0, n - 1, result);
+
+  result.forEach(permutation => {
+    console.log(permutation);
+  });
+}
+printPermutations("cd");
+printPermutations("abb");
+
+
+8th Solution
+function countConsonants(str) {
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  let count = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i].toLowerCase();
+    if (!vowels.includes(char) && char >= 'a' && char <= 'z') {
+      count++;
+    }
+  }
+
+  return count;
+}
+console.log(countConsonants('abc de')); 
+console.log(countConsonants('geeksforgeeks portal')); 
+
+
+
